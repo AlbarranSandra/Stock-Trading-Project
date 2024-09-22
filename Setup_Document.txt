@@ -1,0 +1,21 @@
+Hey, fork this or clone this repository to your system this will help us to be in sync 
+
+After cloning to local system 
+ Run npm init -y  
+
+
+
+In the backend folder install the following libraires 
+npm install express mongoose jsonwebtoken bcryptjs dotenv cors
+npm install mongoose
+npm install --save-dev nodemon
+
+
+In the frontend folder setup 
+npx create-react-app .
+npm install bootstrap
+npm install axios
+
+To run we can use 
+npm run dev 
+ i have added script in the scripts section 
