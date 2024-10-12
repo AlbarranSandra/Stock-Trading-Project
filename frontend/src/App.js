@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LoginRegister from './components/Auth/LoginRegister';
+import Portfolio from './components/Dashboard/Portfolio'; // Portfolio component
+import Trade from './components/Trade/Trade';
+import AdminPage from './components/Admin/AdminPage'; // Ensure the correct path to AdminPage
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        {/* Use element instead of component and wrap components in JSX */}
+        <Route path="/" element={<LoginRegister />} />
+        <Route path="/portfolio" element={<Portfolio />} /> {/* Updated to remove userId */}
+        <Route path="/admin" element={<AdminPage />} />  {/* Admin dashboard route */}
+        <Route path="/trade" element={<Trade />} />
+      </Routes>
+    </Router>
   );
 }
 
