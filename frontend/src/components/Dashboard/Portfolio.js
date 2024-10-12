@@ -26,9 +26,9 @@ const Portfolio = () => {
             }
         };
 
-        loadPortfolio(); // Call the loadPortfolio function
+        loadPortfolio(); 
 
-    }, [portfolioId]); // Adding portfolioId as a dependency to reload portfolio if it changes
+    }, [portfolioId]);
 
     const handleDeposit = async () => {
         try {
