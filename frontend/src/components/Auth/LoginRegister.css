@@ -1,0 +1,106 @@
+body{
+    background: url('./SAZ.jpg') no-repeat center center fixed;
+        /* Set the background image */
+        background-size: cover;
+        /* Make the background cover the entire container */
+}
+.auth-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tab-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.tab {
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.tab.active {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.tab-content {
+    padding: 20px;
+}
+
+.field-wrap {
+    margin-bottom: 15px;
+}
+
+.field-wrap label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.field-wrap input[type="text"],
+.field-wrap input[type="email"],
+.field-wrap input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.field-wrap .req {
+    color: red;
+}
+
+.role-selection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.role-selection label {
+    margin-right: 10px;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.button:hover {
+    background: #0056b3;
+}
+
+.forgot {
+    margin-top: 15px;
+    color: #007bff;
+    cursor: pointer;
+    text-align: center;
+}
+
+.forgot:hover {
+    text-decoration: underline;
+}
+
+p {
+    text-align: center;
+    color: #ff0000;
+    /* For error messages */
+}
+
+
+
+
