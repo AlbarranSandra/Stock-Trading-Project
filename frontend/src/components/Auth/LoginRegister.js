@@ -65,7 +65,7 @@ const LoginRegister = () => {
 
             <div className="tab-content">
                 <div>
-                    <h1>{isLogin ? 'Welcome To SAZ' : 'Sign Up for SAZ'}</h1>
+                    <h1>{isLogin ? 'Welcome To SAZ Trades' : 'Sign Up for SAZ Trades'}</h1>
                     <form onSubmit={handleSubmit}>
                         {!isLogin && (
                             <>

@@ -1,6 +1,7 @@
 // src/components/Trade/Trade.js
 import React, { useState, useEffect } from 'react';
 import { fetchStocks, buyStock, sellStock } from '../../services/stockService';
+import './Trade.css';
 
 const Trade = () => {
     const [stocks, setStocks] = useState([]);
@@ -51,12 +52,12 @@ const Trade = () => {
                     <option value="">Select Stock</option>
                     {stocks.map(stock => (
                         <option key={stock._id} value={stock._id}>
-                            {stock.name} - ${stock.currentPrice}
+                            {stock.stockTicker} - ${stock.currentPrice}
                         </option>
                     ))}
                 </select>
                 <div>
-                    <label>Quantity:</label>
+                    <label className="labels">Quantity:</label>
                     <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} min="1" required />
                 </div>
                 <button type="submit">Buy</button>
@@ -72,7 +73,7 @@ const Trade = () => {
                     ))}
                 </select>
                 <div>
-                    <label>Quantity:</label>
+                    <label className="labels">Quantity:</label>
                     <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} min="1" required />
                 </div>
                 <button type="submit">Sell</button>

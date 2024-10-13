@@ -31,6 +31,8 @@ export const deposit = async (amount) => {
     }
 };
 
+
+
 export const withdraw = async (amount) => {
     const token = getToken(); // Retrieve token inside the function
     try {

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams to get route parameters
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { fetchPortfolioById, deposit, withdraw } from '../../services/portfolioService';
-import { buyStock, sellStock } from '../../services/stockService';
+import './Portfolio.css';
 
 const Portfolio = () => {
     const { portfolioId } = useParams(); // Get portfolioId from route parameters
     const [portfolio, setPortfolio] = useState(null);
     const [message, setMessage] = useState('');
     const [amount, setAmount] = useState(0);
-    const [stockTicker, setStockTicker] = useState('');
-    const [quantity, setQuantity] = useState(0);
+    const navigate = useNavigate(); // Initialize useNavigate for redirecting
 
     useEffect(() => {
         const loadPortfolio = async () => {
@@ -26,7 +25,7 @@ const Portfolio = () => {
             }
         };
 
-        loadPortfolio(); 
+        loadPortfolio();
 
     }, [portfolioId]);
 
@@ -50,24 +49,9 @@ const Portfolio = () => {
         }
     };
 
-    const handleBuyStock = async () => {
-        try {
-            await buyStock(stockTicker, quantity);
-            setMessage('Stock purchase successful');
-            // Optionally refresh portfolio after the transaction
-        } catch (error) {
-            setMessage('Error during stock purchase: ' + error.message);
-        }
-    };
-
-    const handleSellStock = async () => {
-        try {
-            await sellStock(stockTicker, quantity);
-            setMessage('Stock sale successful');
-            // Optionally refresh portfolio after the transaction
-        } catch (error) {
-            setMessage('Error during stock sale: ' + error.message);
-        }
+    // Function to handle the "Trade" button, navigating to the stocks page
+    const goToStocksPage = () => {
+        navigate('/trade'); // Assuming your stocks page route is '/stocks'
     };
 
     return (
@@ -86,23 +70,8 @@ const Portfolio = () => {
                         ))}
                     </ul>
 
-                    <div>
-                        <h3>Buy/Sell Stocks</h3>
-                        <input
-                            type="text"
-                            placeholder="Stock Ticker"
-                            value={stockTicker}
-                            onChange={e => setStockTicker(e.target.value)}
-                        />
-                        <input
-                            type="number"
-                            placeholder="Quantity"
-                            value={quantity}
-                            onChange={e => setQuantity(Number(e.target.value))}
-                        />
-                        <button onClick={handleBuyStock}>Buy Stock</button>
-                        <button onClick={handleSellStock}>Sell Stock</button>
-                    </div>
+                    {/* Trade Button to navigate to the stocks page */}
+                    <button onClick={goToStocksPage}>Trade</button>
 
                     <div>
                         <h3>Deposit/Withdraw Funds</h3>

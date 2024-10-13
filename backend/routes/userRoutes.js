@@ -2,15 +2,14 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const Portfolio = require('../models/Portfolio');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-
+const auth = require('../middleware/auth'); 
 
 // Deposit Cash
-router.post('/deposit', async (req, res) => {
-    const { userId, amount } = req.body;
+router.post('/deposit', auth, async (req, res) => {
+    const { amount } = req.body;
 
     try {
+        const userId = req.user.userId;
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -31,10 +30,11 @@ router.post('/deposit', async (req, res) => {
 });
 
 // Withdraw Cash
-router.post('/withdraw', async (req, res) => {
-    const { userId, amount } = req.body;
+router.post('/withdraw',auth, async (req, res) => {
+    const { amount } = req.body;
 
     try {
+        const userId = req.user.userId;
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });

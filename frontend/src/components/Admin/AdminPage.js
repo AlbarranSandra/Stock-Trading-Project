@@ -2,13 +2,15 @@
 import React, { useState, useEffect} from 'react';
 import { createStock, setMarketHours } from '../../services/adminService';
 import { fetchStocks } from '../../services/stockService';
+import './AdminPage.css';
+
 
 const AdminPage = () => {
     const [stockData, setStockData] = useState({
         companyName: '',
         stockTicker: '',
-        initialPrice: 0,
-        volume: 0 // Add volume to the state
+        initialPrice: '',
+        volume: '' // Add volume to the state
     });
     const [marketHours, setMarketHoursState] = useState({ open: '', close: '' });
     const [message, setMessage] = useState('');
@@ -36,7 +38,7 @@ const AdminPage = () => {
         try {
             await createStock(stockData);
             setMessage('Stock created successfully');
-            setStockData({ companyName: '', stockTicker: '', initialPrice: 0, volume: 0 });
+            setStockData({ companyName: '', stockTicker: '', initialPrice: '', volume: '' });
             loadStocks();
         } catch (error) {
             setMessage('Error creating stock: ' + error.message);
@@ -54,8 +56,10 @@ const AdminPage = () => {
 
     return (
         <div className="admin-page">
-            <h2>Admin Dashboard</h2>
+            <h2>Admin Dashboard for SAZ Trades</h2>
 
+            {message && <p>{message}</p>}
+            
             <h3>Create Stock</h3>
             <input
                 type="text"
@@ -94,7 +98,7 @@ const AdminPage = () => {
                 <ul>
                     {stocks.map(stock => (
                         <li key={stock._id}>
-                            {stock.companyName} ({stock.stockTicker}) - Current Price: ${stock.initialPrice} {/* Assuming initialPrice is the current price */}
+                            {stock.companyName} ({stock.stockTicker}) - Volume: {stock.volume} 
                         </li>
                     ))}
                 </ul>
@@ -102,7 +106,7 @@ const AdminPage = () => {
                 <p>No stocks available</p>
             )}
 
-            {message && <p>{message}</p>}
+            
         </div>
     );
 };
