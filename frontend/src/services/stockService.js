@@ -11,9 +11,9 @@ export const fetchStocks = async () => {
 };
 
 // Function to buy stocks
-export const buyStock = async (stockTicker, quantity) => {
+export const buyStock = async (stockId, quantity) => {
     const response = await axios.post('http://127.0.0.1:5000/api/trades/buy', {
-        stockTicker, quantity
+        stockId, quantity
     }, {
         headers: { Authorization: `Bearer ${token}` }
     });
@@ -21,9 +21,9 @@ export const buyStock = async (stockTicker, quantity) => {
 };
 
 // Function to sell stocks
-export const sellStock = async (stockTicker, quantity) => {
+export const sellStock = async (stockId, quantity) => {
     const response = await axios.post('http://127.0.0.1:5000/api/trades/sell', {
-        stockTicker, quantity
+        stockId, quantity
     }, {
         headers: { Authorization: `Bearer ${token}` }
     });

@@ -10,7 +10,7 @@ const Portfolio = () => {
     const [amount, setAmount] = useState(0);
     const navigate = useNavigate(); // Initialize useNavigate for redirecting
 
-    useEffect(() => {
+    
         const loadPortfolio = async () => {
             try {
                 const token = localStorage.getItem('token'); // Retrieve token from local storage
@@ -25,9 +25,17 @@ const Portfolio = () => {
             }
         };
 
+        useEffect(() => {
         loadPortfolio();
+        }, []);
 
-    }, [portfolioId]);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            loadPortfolio();
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     const handleDeposit = async () => {
         try {
@@ -61,11 +69,11 @@ const Portfolio = () => {
             {portfolio && (
                 <div>
                     <h3>Cash Balance: ${portfolio.cashBalance}</h3>
-                    <h4>Stocks:</h4>
+                    <h4>My Stocks:</h4>
                     <ul>
                         {portfolio.stocks.map(stock => (
                             <li key={stock.stock._id}>
-                                {stock.stock.companyName} ({stock.stock.stockTicker}): {stock.quantity}
+                                {stock.stock.companyName} ({stock.stock.stockTicker}) - Quantity : {stock.quantity} | Current Price : {stock.stock.currentPrice} | Value : {(stock.quantity * stock.stock.currentPrice).toFixed(2)} 
                             </li>
                         ))}
                     </ul>

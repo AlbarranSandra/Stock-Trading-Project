@@ -18,19 +18,26 @@ const AdminPage = () => {
 
 
     // Function to load all stocks
+    // Function to fetch stocks
     const loadStocks = async () => {
         try {
-            const response = await fetchStocks(); // Fetch all stocks from the API
-            setStocks(response); // Update state with fetched stocks
+            const data = await fetchStocks();
+            setStocks(data);
         } catch (error) {
-            console.error('Error fetching stocks:', error);
-            setMessage('Error fetching stocks data');
+            setMessage('Error loading stocks: ' + error.message);
         }
     };
 
-    // Call loadStocks when the component mounts
     useEffect(() => {
         loadStocks();
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            loadStocks();
+        }, 5000);
+
+        return () => clearInterval(interval);
     }, []);
 
 
@@ -98,7 +105,7 @@ const AdminPage = () => {
                 <ul>
                     {stocks.map(stock => (
                         <li key={stock._id}>
-                            {stock.companyName} ({stock.stockTicker}) - Volume: {stock.volume} 
+                            {stock.companyName} ({stock.stockTicker}) - Volume : {stock.volume} | InitialPrice : {stock.initialPrice} | Current Price : {stock.currentPrice}
                         </li>
                     ))}
                 </ul>

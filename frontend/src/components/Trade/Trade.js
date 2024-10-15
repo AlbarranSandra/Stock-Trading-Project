@@ -6,20 +6,38 @@ import './Trade.css';
 const Trade = () => {
     const [stocks, setStocks] = useState([]);
     const [selectedStock, setSelectedStock] = useState('');
+    const [currentPrice, setCurrentPrice] = useState(0);
     const [quantity, setQuantity] = useState(1);
     const [message, setMessage] = useState('');
 
+    // Function to fetch stocks
+    const loadStocks = async () => {
+        try {
+            const data = await fetchStocks();
+            setStocks(data);
+        } catch (error) {
+            setMessage('Error loading stocks: ' + error.message);
+        }
+    };
+
     useEffect(() => {
-        const loadStocks = async () => {
-            try {
-                const data = await fetchStocks();
-                setStocks(data);
-            } catch (error) {
-                setMessage('Error loading stocks: ' + error.message);
-            }
-        };
         loadStocks();
     }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            loadStocks(); 
+        }, 5000); 
+
+        return () => clearInterval(interval); 
+    }, []);
+
+    useEffect(() => {
+        const stock = stocks.find(stock => stock._id === selectedStock);
+        if (stock) {
+            setCurrentPrice(stock.currentPrice);
+        }
+    }, [selectedStock, stocks]);
 
     const handleBuy = async (e) => {
         e.preventDefault();
@@ -46,38 +64,37 @@ const Trade = () => {
     return (
         <div className="trade-container">
             <h2>Trade Stocks</h2>
-            <form onSubmit={handleBuy}>
-                <h3>Buy Stock</h3>
-                <select onChange={(e) => setSelectedStock(e.target.value)} required>
-                    <option value="">Select Stock</option>
-                    {stocks.map(stock => (
-                        <option key={stock._id} value={stock._id}>
-                            {stock.stockTicker} - ${stock.currentPrice}
-                        </option>
-                    ))}
-                </select>
-                <div>
-                    <label className="labels">Quantity:</label>
-                    <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} min="1" required />
+            <h3>Buy/Sell Stock</h3>
+            {/* Show current price box only when a stock is selected */}
+            {selectedStock && (
+                <div className="current-price-box">
+                    <h4>Current Price: ${currentPrice}</h4>
                 </div>
-                <button type="submit">Buy</button>
-            </form>
-            <form onSubmit={handleSell}>
-                <h3>Sell Stock</h3>
-                <select onChange={(e) => setSelectedStock(e.target.value)} required>
-                    <option value="">Select Stock</option>
-                    {stocks.map(stock => (
-                        <option key={stock._id} value={stock._id}>
-                            {stock.name} - ${stock.currentPrice}
-                        </option>
-                    ))}
-                </select>
-                <div>
-                    <label className="labels">Quantity:</label>
-                    <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} min="1" required />
-                </div>
-                <button type="submit">Sell</button>
-            </form>
+            )}
+
+            {/* Single stock selection for both Buy and Sell */}
+            <select onChange={(e) => setSelectedStock(e.target.value)} required>
+                <option value="">Select Stock</option>
+                {stocks.map(stock => (
+                    <option key={stock._id} value={stock._id}>
+                        {stock.companyName} ({stock.stockTicker})
+                    </option>
+                ))}
+            </select>
+
+            {/* Shared quantity input for both Buy and Sell */}
+            <div>
+                <label className="labels">Quantity:</label>
+                <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} min="1" required />
+            </div>
+
+            {/* Separate Buy and Sell buttons */}
+            <div className="button-group">
+                <button onClick={handleBuy}>Buy</button>
+                <button onClick={handleSell}>Sell</button>
+            </div>
+
+            {/* Display message after transaction */}
             {message && <p>{message}</p>}
         </div>
     );
