@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom'; 
 import { fetchPortfolioById, deposit, withdraw } from '../../services/portfolioService';
 import './Portfolio.css';
 
 const Portfolio = () => {
-    const { portfolioId } = useParams(); // Get portfolioId from route parameters
     const [portfolio, setPortfolio] = useState(null);
     const [message, setMessage] = useState('');
-    const [amount, setAmount] = useState(0);
-    const navigate = useNavigate(); // Initialize useNavigate for redirecting
-
+    const [amount, setAmount] = useState('');
+    const navigate = useNavigate(); 
     
+    
+   
         const loadPortfolio = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve token from local storage
+                const token = localStorage.getItem('token'); 
                 if (!token) {
                     throw new Error('No token found. Please log in.');
                 }
 
-                const data = await fetchPortfolioById(); // Fetch portfolio by portfolioId
+                const data = await fetchPortfolioById(); 
                 setPortfolio(data);
             } catch (error) {
                 setMessage('Error loading portfolio: ' + error.message);
@@ -57,9 +57,11 @@ const Portfolio = () => {
         }
     };
 
-    // Function to handle the "Trade" button, navigating to the stocks page
     const goToStocksPage = () => {
-        navigate('/trade'); // Assuming your stocks page route is '/stocks'
+        navigate('/trade'); 
+    };
+    const goToTransactionHistory = () => {
+        navigate('/transaction-history');  
     };
 
     return (
@@ -68,7 +70,7 @@ const Portfolio = () => {
             {message && <p>{message}</p>}
             {portfolio && (
                 <div>
-                    <h3>Cash Balance: ${portfolio.cashBalance}</h3>
+                    <h3>Cash Balance: ${(portfolio.cashBalance).toFixed(2)}</h3>
                     <h4>My Stocks:</h4>
                     <ul>
                         {portfolio.stocks.map(stock => (
@@ -78,9 +80,10 @@ const Portfolio = () => {
                         ))}
                     </ul>
 
-                    {/* Trade Button to navigate to the stocks page */}
                     <button onClick={goToStocksPage}>Trade</button>
-
+                    <button onClick={goToTransactionHistory} className="transaction-history-btn">
+                        View Transaction History
+                    </button>   
                     <div>
                         <h3>Deposit/Withdraw Funds</h3>
                         <input

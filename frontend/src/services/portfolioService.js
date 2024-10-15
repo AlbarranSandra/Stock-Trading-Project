@@ -26,7 +26,7 @@ export const deposit = async (amount) => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error during deposit:', error); // Log the full error
+        console.error('Error during deposit:', error); 
         throw new Error(error.response?.data?.message || 'Error during deposit');
     }
 };
@@ -34,14 +34,14 @@ export const deposit = async (amount) => {
 
 
 export const withdraw = async (amount) => {
-    const token = getToken(); // Retrieve token inside the function
+    const token = getToken(); 
     try {
         const response = await axios.post('http://127.0.0.1:5000/api/user/withdraw', { amount }, {
             headers: { Authorization: `Bearer ${token}` },
         });
         return response.data;
     } catch (error) {
-        console.error('Error during withdrawal:', error); // Log the full error
+        console.error('Error during withdrawal:', error); 
         throw new Error(error.response?.data?.message || 'Error during withdrawal');
     }
 };

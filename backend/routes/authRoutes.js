@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 
 const router = express.Router();
 
-// User Registration
 router.post('/register', async (req, res) => {
     const { fullName, username, email, password, role } = req.body;
     try {
@@ -23,7 +22,7 @@ router.post('/register', async (req, res) => {
         });
 
         // Create a portfolio for the new user
-        const portfolio = new Portfolio({ user: user._id }); // No initial stocks or cash balance
+        const portfolio = new Portfolio({ user: user._id }); 
         await portfolio.save();
 
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {

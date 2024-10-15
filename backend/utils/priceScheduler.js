@@ -1,5 +1,3 @@
-// utils/priceScheduler.js
-
 const Stock = require('../models/Stock');
 const randomPriceChange = require('./priceGenerator');
 

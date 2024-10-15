@@ -19,7 +19,6 @@ router.post('/create', auth, async (req, res) => {
     }
 });
 
-// Route to fetch all stocks (available to both admins and customers)
 router.get('/all', auth, async (req, res) => {
     try {
         const stocks = await Stock.find();

@@ -5,7 +5,8 @@ const Transaction = require('../models/Transaction');
 const auth = require('../middleware/auth');
 const router = express.Router();
 const marketHoursMiddleware = require('../middleware/marketHours');
-// Route to buy stock
+
+
 router.post('/buy', auth, marketHoursMiddleware, async (req, res) => {
     const { stockId, quantity } = req.body;
     try {
@@ -17,17 +18,14 @@ router.post('/buy', auth, marketHoursMiddleware, async (req, res) => {
         const userPortfolio = await Portfolio.findOne({ user: req.user.userId });
         const totalCost = stock.currentPrice * quantity;
 
-        // Check if the user has enough cash
         if (userPortfolio.cashBalance < totalCost) {
             return res.status(400).json({ message: 'Insufficient cash balance' });
         }
-
-        // Deduct cost and update portfolio
         userPortfolio.cashBalance -= totalCost;
 
         const stockIndex = userPortfolio.stocks.findIndex(s => s.stock.toString() === stockId);
         if (stockIndex >= 0) {
-            userPortfolio.stocks[stockIndex].quantity += quantity;
+            userPortfolio.stocks[stockIndex].quantity += Number(quantity);
         } else {
             userPortfolio.stocks.push({ stock: stockId, quantity });
         }
@@ -50,7 +48,7 @@ router.post('/buy', auth, marketHoursMiddleware, async (req, res) => {
     }
 });
 
-// Route to sell stock
+
 router.post('/sell', auth, marketHoursMiddleware, async (req, res) => {
     const { stockId, quantity } = req.body;
     try {
@@ -68,7 +66,6 @@ router.post('/sell', auth, marketHoursMiddleware, async (req, res) => {
 
         const totalRevenue = stock.currentPrice * quantity;
 
-        // Update portfolio and cash balance
         stockInPortfolio.quantity -= quantity;
         if (stockInPortfolio.quantity === 0) {
             userPortfolio.stocks = userPortfolio.stocks.filter(s => s.stock.toString() !== stockId);

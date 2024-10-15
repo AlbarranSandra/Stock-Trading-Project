@@ -3,7 +3,7 @@ const Portfolio = require('../models/Portfolio');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
-// Route to get the user's portfolio (stocks and cash balance) by userId from the token
+
 router.get('/me', auth, async (req, res) => {
     try {
         const portfolio = await Portfolio.findOne({ user: req.user.userId }).populate('stocks.stock', 'companyName stockTicker currentPrice');

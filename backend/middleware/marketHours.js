@@ -1,9 +1,7 @@
-// middleware/marketHours.js
-
 const isMarketOpen = () => {
     const currentHour = new Date().getHours();
-    const openingHour = 0; // Market opens at 9 AM
-    const closingHour = 24; // Market closes at 4 PM
+    const openingHour = 0; 
+    const closingHour = 24; 
 
     return currentHour >= openingHour && currentHour <= closingHour;
 };

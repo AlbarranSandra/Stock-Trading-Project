@@ -15,11 +15,11 @@ router.post('/deposit', auth, async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        user.cashBalance += amount; // Increase cash balance
+        user.cashBalance += amount; 
         await user.save();
         const portfolio = await Portfolio.findOne({ user: userId });
         if (portfolio) {
-            portfolio.cashBalance += amount; // Increase portfolio cash balance
+            portfolio.cashBalance += amount; 
             await portfolio.save();
         }
         res.status(200).json({ message: 'Deposit successful', cashBalance: user.cashBalance });
@@ -44,12 +44,11 @@ router.post('/withdraw',auth, async (req, res) => {
             return res.status(400).json({ message: 'Insufficient funds' });
         }
 
-        user.cashBalance -= amount; // Decrease cash balance
+        user.cashBalance -= amount; 
         await user.save();
-        // Update user's portfolio cash balance
         const portfolio = await Portfolio.findOne({ user: userId });
         if (portfolio) {
-            portfolio.cashBalance -= amount; // Decrease portfolio cash balance
+            portfolio.cashBalance -= amount; 
             await portfolio.save();
         }
         res.status(200).json({ message: 'Withdrawal successful', cashBalance: user.cashBalance });

@@ -18,7 +18,6 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.8);
-    /* Semi-transparent overlay */
     border-radius: 8px;
     z-index: 1;
     pointer-events: none;
@@ -68,12 +67,12 @@
     background: #0056b3;
 }
 
-/* Styling for Existing Stocks section */
+
 .admin-page ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    /* Make sure there's no margin that breaks alignment */
+ 
 }
 
 .admin-page ul li {
@@ -84,12 +83,12 @@
     z-index: 2;
     position: relative;
     color: white;
-    /* Ensure text is white for readability */
+    
 }
 
 .admin-page li:hover {
     background: rgba(255, 255, 255, 0.2);
-    /* Add hover effect for better UX */
+  
 }
 
 .admin-page li span {

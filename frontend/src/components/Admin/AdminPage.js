@@ -1,4 +1,3 @@
-// src/components/Admin/AdminPage.js
 import React, { useState, useEffect} from 'react';
 import { createStock, setMarketHours } from '../../services/adminService';
 import { fetchStocks } from '../../services/stockService';
@@ -10,15 +9,12 @@ const AdminPage = () => {
         companyName: '',
         stockTicker: '',
         initialPrice: '',
-        volume: '' // Add volume to the state
+        volume: '' 
     });
     const [marketHours, setMarketHoursState] = useState({ open: '', close: '' });
     const [message, setMessage] = useState('');
-    const [stocks, setStocks] = useState([]); // State to hold all stocks
+    const [stocks, setStocks] = useState([]); 
 
-
-    // Function to load all stocks
-    // Function to fetch stocks
     const loadStocks = async () => {
         try {
             const data = await fetchStocks();
@@ -87,10 +83,10 @@ const AdminPage = () => {
                 onChange={e => setStockData({ ...stockData, initialPrice: Number(e.target.value) })}
             />
             <input
-                type="number" // Use number input for volume
+                type="number" 
                 placeholder="Volume"
                 value={stockData.volume}
-                onChange={e => setStockData({ ...stockData, volume: Number(e.target.value) })} // Set volume
+                onChange={e => setStockData({ ...stockData, volume: Number(e.target.value) })} 
             />
             <button onClick={handleCreateStock}>Create Stock</button>
 
@@ -99,9 +95,8 @@ const AdminPage = () => {
             <input type="time" value={marketHours.close} onChange={e => setMarketHoursState({ ...marketHours, close: e.target.value })} />
             <button onClick={handleSetMarketHours}>Set Market Hours</button>
 
-            {/* Display Existing Stocks */}
             <h3>Existing Stocks</h3>
-            {stocks.length > 0 ? ( // Check if stocks array is not empty
+            {stocks.length > 0 ? ( 
                 <ul>
                     {stocks.map(stock => (
                         <li key={stock._id}>

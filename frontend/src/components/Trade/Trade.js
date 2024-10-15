@@ -10,7 +10,7 @@ const Trade = () => {
     const [quantity, setQuantity] = useState(1);
     const [message, setMessage] = useState('');
 
-    // Function to fetch stocks
+    
     const loadStocks = async () => {
         try {
             const data = await fetchStocks();
@@ -65,14 +65,12 @@ const Trade = () => {
         <div className="trade-container">
             <h2>Trade Stocks</h2>
             <h3>Buy/Sell Stock</h3>
-            {/* Show current price box only when a stock is selected */}
             {selectedStock && (
                 <div className="current-price-box">
                     <h4>Current Price: ${currentPrice}</h4>
                 </div>
             )}
 
-            {/* Single stock selection for both Buy and Sell */}
             <select onChange={(e) => setSelectedStock(e.target.value)} required>
                 <option value="">Select Stock</option>
                 {stocks.map(stock => (
@@ -82,19 +80,16 @@ const Trade = () => {
                 ))}
             </select>
 
-            {/* Shared quantity input for both Buy and Sell */}
             <div>
                 <label className="labels">Quantity:</label>
                 <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} min="1" required />
             </div>
 
-            {/* Separate Buy and Sell buttons */}
             <div className="button-group">
                 <button onClick={handleBuy}>Buy</button>
                 <button onClick={handleSell}>Sell</button>
             </div>
 
-            {/* Display message after transaction */}
             {message && <p>{message}</p>}
         </div>
     );
